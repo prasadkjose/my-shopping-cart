@@ -1,0 +1,8 @@
+.card {
+  width: 500px;
+  margin: 2rem;
+}
+.buttons {
+  display: inline-block;
+  margin: 0px;
+}
