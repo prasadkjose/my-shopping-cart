@@ -27,6 +27,7 @@ class Counters extends Component {
                     key={counter.id}
                     onDelete={this.props.onDelete}
                     onIncrement={this.props.onIncrement}
+                    onTextChange={this.props.onTextChange}
                     /*You can send in state objects as attributes and it is accessed as params inside the conpoment */
                     counter={counter}
                   ></Counter>

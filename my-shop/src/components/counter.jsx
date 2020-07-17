@@ -5,11 +5,8 @@ class Counter extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      count: this.props.counter.value,
-      imageURL: "https://picsum.photos/200",
-      tags: ["tag1", "tag2", "tag3"],
-    };
+    this.state = {};
+    this.handleChange = this.handleChange.bind(this);
     //Individual Component tag style without classes
     this.style = {
       fontSize: 20,
@@ -30,6 +27,10 @@ class Counter extends Component {
     return classes;
   }
 
+  handleChange(event) {
+    this.props.onTextChange(event.target.value, this.props.counter);
+    
+  }
   //Final Render
   render() {
     return (
@@ -39,12 +40,19 @@ class Counter extends Component {
           <div className="card-body">
             <div className="col-md-1 buttons">
               <span style={this.style} className={this.getBadgeClases()}>
-                {this.props.counter.value}
+                {this.props.counter.quantity}
               </span>{" "}
             </div>
 
             <div className="input-group input-group-sm  col-md-5 buttons">
-              <input type="text" />
+              <form>
+                {" "}
+                <input
+                  type="text"
+                  defaultValue={this.state.text}
+                  onChange={this.handleChange}
+                />
+              </form>
             </div>
             <div className="col-md-2  m-2 buttons">
               <button
