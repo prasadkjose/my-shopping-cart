@@ -2,6 +2,12 @@
   color: blue;
 }
 .center {
-  margin-left: 0px;
+  margin: auto;
   padding: 0px;
+  background-color: #ecf2f6;
+}
+
+.btns {
+  background-color: #354052;
+  color: aliceblue;
 }

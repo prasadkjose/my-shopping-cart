@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../styles/counter.css";
+import check from "../resources/icons/tick.png";
+import DataService from "../services/services";
 
 class Counter extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Counter extends Component {
     this.style = {
       fontSize: 20,
     };
+
     //this.incrementCount = this.incrementCount.bind(this);
   }
 
@@ -21,6 +24,11 @@ class Counter extends Component {
   //   this.setState({ count: this.state.count + 1 });
   // };
 
+  handleCheck(counter) {
+    var displayDefault = "initial";
+    return displayDefault;
+  }
+
   getBadgeClases() {
     let classes = "badge m1 badge-";
     classes += this.props.counter === 0 ? "warning" : "primary";
@@ -29,40 +37,45 @@ class Counter extends Component {
 
   handleChange(event) {
     this.props.onTextChange(event.target.value, this.props.counter);
-    
   }
   //Final Render
   render() {
     return (
       <div className="">
-        <div className="card row">
-          {/*<img src={this.state.imageURL}></img>*/}
+        <img
+          style={{ display: this.handleCheck(this.props.counter) }}
+          src={check}
+          className="check"
+          alt="Logo"
+        />
+        <div className="card row ">
           <div className="card-body">
-            <div className="col-md-1 buttons">
+            <div className="col-xs-1 in-block">
               <span style={this.style} className={this.getBadgeClases()}>
                 {this.props.counter.quantity}
               </span>{" "}
             </div>
 
-            <div className="input-group input-group-sm  col-md-5 buttons">
+            <div className="ml-2 col-xs-4  in-block">
               <form>
                 {" "}
                 <input
+                  className="input"
                   type="text"
-                  defaultValue={this.state.text}
+                  defaultValue={this.props.counter.item}
                   onChange={this.handleChange}
                 />
               </form>
             </div>
-            <div className="col-md-2  m-2 buttons">
+            <div className="col-xs-3 in-block ml-4">
               <button
                 onClick={() => this.props.onIncrement(this.props.counter)}
                 className="btn btn-secondary btn-sm "
               >
-                Increment
+                +
               </button>{" "}
             </div>
-            <div className="col-md-2  m-2 buttons">
+            <div className="col-xs-2 ml-3 in-block ">
               <button
                 onClick={() => this.props.onDelete(this.props.counter.id)}
                 className="btn btn-danger btn-sm "

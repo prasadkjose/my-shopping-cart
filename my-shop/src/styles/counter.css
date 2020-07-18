@@ -1,8 +1,24 @@
 .card {
-  width: 500px;
+  width: 22rem;
   margin: 2rem;
 }
-.buttons {
+.in-block {
   display: inline-block;
   margin: 0px;
+}
+
+.buttons {
+  margin-left: 50px;
+}
+
+.input {
+  width: 9rem;
+}
+
+.check {
+  width: 2rem;
+  z-index: 1;
+  position: absolute;
+  margin-top: 20px;
+  margin-left: -12rem;
 }

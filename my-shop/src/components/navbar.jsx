@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../styles/navbar.css";
 
 //Since this component has no state, it can be written as a stateless functional component
 class NavBar extends Component {
@@ -11,9 +12,10 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-light">
-          <div className="navbar-brand">
-            Navbar{" "}
+        <nav className="navbar theme">
+          <div className="navbar-brand">My Shopping Cart</div>
+          <div className="">
+            Total Items{" "}
             <span className="badge badge-pill badge-secondary">
               {this.props.totalCounters}
             </span>

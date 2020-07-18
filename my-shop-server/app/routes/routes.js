@@ -18,11 +18,14 @@ module.exports = (app) => {
   // Update a Tutorial with id
   router.put("/:id", tutorials.update);
 
+  // Update All items
+  router.put("/", tutorials.updateAll);
+
   // Delete a Tutorial with id
   router.delete("/:id", tutorials.delete);
 
-  // delete a new Tutorial
-  //router.delete("/", tutorials.deleteAll);
+  // delete all Tutorial
+  router.delete("/", tutorials.deleteAll);
 
   app.use("/api/tutorials", router);
 };
