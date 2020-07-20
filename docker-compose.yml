@@ -1,0 +1,20 @@
+version: "2"
+services:
+  react:
+    build: ./my-shop
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+  server:
+    build: ./my-shop-server
+    ports:
+      - "8080:8080"
+#  Mongo dependecy not added yet. DB calls made to Atlas
+#     depends_on:
+#       - mongo
+#   mongo:
+#     image: mongo
+#     ports:
+#       - '27017:27017'
+

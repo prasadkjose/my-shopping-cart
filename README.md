@@ -1,20 +1,18 @@
 # My Shopping Cart
 
-> A shopping cart built using the MERN stack and hosted with docker on AWS.
+> A shopping cart built using the MERN stack and hosted with docker on AWS Elasticbean and Elastic Container Registry(ECR).
 
 [![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
-//
+[![react Version][react-image]][react-url]
 ![](header.png)
 
-## Development setup
+## Development setup (without Docker)
 
 Install all dependencies
 
 ```sh
 npm install
+npm run install-dependencies
 ```
 
 Run the Backend and Frontend with
@@ -22,6 +20,22 @@ Run the Backend and Frontend with
 ```sh
 npm run server-start
 npm run start
+```
+
+## Development setup (with Docker)
+
+Build individual images of my-shop and my-shop server with
+
+```sh
+docker build -t <name:tag>
+```
+
+## or
+
+Build and run with docker-compose
+
+```sh
+docker-compose up --build
 ```
 
 ## Release History
@@ -35,7 +49,7 @@ Made by Prasad.
 
 ## Contributing
 
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
+1. Fork it (<https://github.com/prasadkjose/my-shopping-cart/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
@@ -43,9 +57,7 @@ Made by Prasad.
 
 <!-- Markdown link & img dfn's -->
 
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
+[npm-image]: https://img.shields.io/badge/node-14.5.0-brightgreen
+[npm-url]: https://npmjs.org/
+[react-image]: https://img.shields.io/badge/react-6.13.1-brightgreen
+[react-url]: https://reactjs.org/

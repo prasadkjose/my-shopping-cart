@@ -6,7 +6,8 @@
   "scripts": {
     "test-server": "echo \"Error: no test specified\" && exit 1",
     "start-server": "node my-shop-server/server.js",
-    "start": "cd my-shop && npm start"
+    "start": "cd my-shop && npm start",
+    "install-dependencies": "cd my-shop && npm install --silent"
   },
   "author": "prasad",
   "license": "ISC",
