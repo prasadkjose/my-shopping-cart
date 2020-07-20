@@ -11,13 +11,16 @@ class Counters extends Component {
   render() {
     return (
       <div className="container text-center">
-        <button onClick={this.props.onReset} className="btn btns">
-          {" "}
-          Reset{" "}
-        </button>
-        <button onClick={this.props.onAdd} className="btn btns m-2">
-          Add
-        </button>{" "}
+        <div className="ar-btns ">
+          <button onClick={this.props.onReset} className="btn btns">
+            {" "}
+            Reset{" "}
+          </button>
+          <button onClick={this.props.onAdd} className="btn btns m-2">
+            Add
+          </button>{" "}
+        </div>
+
         <div className="container ">
           <div className="row">
             <div className="center">

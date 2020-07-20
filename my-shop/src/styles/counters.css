@@ -4,10 +4,15 @@
 .center {
   margin: auto;
   padding: 0px;
-  background-color: #ecf2f6;
 }
 
 .btns {
   background-color: #354052;
   color: aliceblue;
+}
+
+.ar-btns {
+  /* background-color: #354052; */
+  width: 60%;
+  margin: auto;
 }
