@@ -38,6 +38,10 @@ Build and run with docker-compose
 docker-compose up --build
 ```
 
+## Production setup
+
+WIP
+
 ## Release History
 
 - 1.0.0
