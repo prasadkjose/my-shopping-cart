@@ -3,6 +3,11 @@ import Counters from "./components/counters";
 import NavBar from "./components/navbar";
 import DataService from "./services/services";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./styles/theme";
+import { GlobalStyles, ToggleStyle } from "./styles/globalStyles";
+import BootstrapSwitchButton from "bootstrap-switch-button-react";
+
 import "./styles/app.css";
 
 export default class App extends Component {
@@ -11,9 +16,18 @@ export default class App extends Component {
 
     this.state = {
       counters: this.initState(),
+      theme: "light",
     };
     this.refreshList = this.refreshList.bind(this);
   }
+
+  toggleTheme = () => {
+    if (this.state.theme === "light") {
+      this.setState({ theme: "dark" });
+    } else {
+      this.setState({ theme: "light" });
+    }
+  };
 
   initState() {
     var initCounters = [];
@@ -149,34 +163,48 @@ export default class App extends Component {
         console.log(e);
       });
     return true;
-    
   };
 
   render() {
     return (
-      <React.Fragment>
-        <div className="">
-          <NavBar
-            totalCounters={
-              this.state.counters.filter((c) => c.quantity > 0 && !c.check)
-                .length
-            }
-          ></NavBar>
-          <Router>
-            <div className="container ">
-              <Counters
-                onReset={this.handleReset}
-                onIncrement={this.handleIncrement}
-                onDelete={this.handleDelete}
-                onAdd={this.handleAdd}
-                onTextChange={this.handleTextChange}
-                onCheck={this.handleChecked}
-                counters={this.state.counters}
-              ></Counters>
-            </div>
-          </Router>
-        </div>
-      </React.Fragment>
+      <ThemeProvider
+        theme={this.state.theme === "light" ? lightTheme : darkTheme}
+      >
+        <>
+          <GlobalStyles />
+          <div className="">
+            <NavBar
+              totalCounters={
+                this.state.counters.filter((c) => c.quantity > 0 && !c.check)
+                  .length
+              }
+            ></NavBar>
+            <Router>
+              <div className="container ">
+                <ToggleStyle>
+                  <BootstrapSwitchButton
+                    checked={"dark"}
+                    onlabel="Dark"
+                    offlabel="Light"
+                    onstyle="dark"
+                    onChange={this.toggleTheme}
+                    width={100}
+                  />
+                </ToggleStyle>
+                <Counters
+                  onReset={this.handleReset}
+                  onIncrement={this.handleIncrement}
+                  onDelete={this.handleDelete}
+                  onAdd={this.handleAdd}
+                  onTextChange={this.handleTextChange}
+                  onCheck={this.handleChecked}
+                  counters={this.state.counters}
+                ></Counters>
+              </div>
+            </Router>
+          </div>
+        </>
+      </ThemeProvider>
     );
   }
 }

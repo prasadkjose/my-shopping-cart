@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import Counter from "./counter";
 import "../styles/counters.css";
-import BootstrapSwitchButton from "bootstrap-switch-button-react";
 class Counters extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { counters: this.props.counters };
+    this.state = {};
   }
 
   render() {
@@ -21,15 +20,7 @@ class Counters extends Component {
             Add
           </button>{" "}
         </div>
-        <BootstrapSwitchButton
-          checked={false}
-          onlabel="On"
-          offlabel="off"
-          onstyle="dark"
-          onChange={(checked) => {
-            this.setState({ isUserAdmin: checked });
-          }}
-        />
+
         <div className="container ">
           <div className="row">
             <div className="center">
