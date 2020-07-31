@@ -1,0 +1,31 @@
+version: "3.3"
+services:
+  server:
+    build: ./my-shop-server
+    image: server:dev
+    ports:
+      - "8080:8080"
+  react:
+    container_name: react
+    build: ./my-shop
+    image: react:dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    depends_on:
+      - server
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+#  Mongo dependecy not added yet. DB calls made to Atlas
+#     depends_on:
+#       - mongo
+#   mongo:
+#     image: mongo
+#     ports:
+#       - '27017:27017'
+
