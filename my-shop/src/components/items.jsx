@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Counter from "./counter";
+import Item from "./item";
 import "../styles/counters.css";
-class Counters extends Component {
+class Items extends Component {
   constructor(props) {
     super(props);
 
@@ -25,16 +25,16 @@ class Counters extends Component {
           <div className="row">
             <div className="center">
               <div className="d-flex flex-wrap">
-                {this.props.counters.map((counter) => (
-                  <Counter
-                    key={counter.id}
+                {this.props.items.map((item) => (
+                  <Item
+                    key={item.id}
                     onDelete={this.props.onDelete}
                     onIncrement={this.props.onIncrement}
                     onTextChange={this.props.onTextChange}
                     onCheck={this.props.onCheck}
                     /*You can send in state objects as attributes and it is accessed as params inside the conpoment */
-                    counter={counter}
-                  ></Counter>
+                    item={item}
+                  ></Item>
                 ))}
               </div>
             </div>
@@ -45,4 +45,4 @@ class Counters extends Component {
   }
 }
 
-export default Counters;
+export default Items;

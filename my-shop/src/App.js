@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import Counters from "./components/counters";
+import Items from "./components/items";
 import NavBar from "./components/navbar";
 import DataService from "./services/services";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -7,20 +7,23 @@ import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { GlobalStyles, ToggleStyle } from "./styles/globalStyles";
 import BootstrapSwitchButton from "bootstrap-switch-button-react";
-
 import "./styles/app.css";
 
 export default class App extends Component {
+  /**
+   * App component constructor.
+   * @constructor
+   */
   constructor(props) {
     super(props);
-
     this.state = {
-      counters: this.initState(),
+      items: this.initState(),
       theme: "light",
     };
     this.refreshList = this.refreshList.bind(this);
   }
 
+  /** Function to toggle light and dark mode. */
   toggleTheme = () => {
     if (this.state.theme === "light") {
       this.setState({ theme: "dark" });
@@ -29,12 +32,13 @@ export default class App extends Component {
     }
   };
 
+  /** Function to initialize App component state from DB. */
   initState() {
-    var initCounters = [];
+    var initItems = [];
     DataService.getAll()
       .then((response) => {
         response.data.forEach((element) => {
-          initCounters.push({
+          initItems.push({
             id: element.id,
             quantity: element.quantity,
             item: element.item,
@@ -42,28 +46,30 @@ export default class App extends Component {
           });
         });
         //console.log(initCounters);
-        this.setState({ counters: initCounters });
+        this.setState({ items: initItems });
         // console.log("Retrieved " + response.data.length + " items");
         // console.log(this.state);
       })
       .catch((e) => {
         console.log(e);
       });
-    return initCounters;
+    return initItems;
   }
 
+  /** Function to initialize App component state from DB. */
   refreshList() {
     this.initState();
   }
 
-  handleDelete = (counterId) => {
-    const counters = this.state.counters.filter(
-      (newCounters) => newCounters.id !== counterId
-    );
-
-    DataService.remove(counterId)
+  /**
+   * Function to delete individual item.
+   * @param {string} itemId - The ID of the counter item.
+   */
+  handleDelete = (itemId) => {
+    const newItems = this.state.items.filter((i) => i.id !== itemId);
+    DataService.remove(itemId)
       .then((response) => {
-        this.setState({ counters });
+        this.setState({ items: newItems });
 
         console.log(response.data);
       })
@@ -73,15 +79,14 @@ export default class App extends Component {
     this.refreshList();
   };
 
+  /** Function to reset all items. */
   handleReset = () => {
-    const counters = this.state.counters.map((resetedCounter) => {
-      resetedCounter.quantity = 0;
-      return resetedCounter;
+    const newItems = this.state.items.map((resetedItems) => {
+      resetedItems.quantity = 0;
+      return resetedItems;
     });
-    this.setState({ counters });
-
+    this.setState({ items: newItems });
     var dataToUpdate = { quantity: 0 };
-
     DataService.updateAll(dataToUpdate)
       .then((response) => {
         console.log(response.data);
@@ -91,18 +96,20 @@ export default class App extends Component {
       });
   };
 
-  handleIncrement = (counter) => {
-    const newCounters = [...this.state.counters];
-    const index = newCounters.indexOf(counter);
-    newCounters[index] = { ...counter };
-    newCounters[index].quantity++;
-    let data = { quantity: newCounters[index].quantity };
-
-    //console.log(counter.id);
-    DataService.update(counter.id, data)
+  /**
+   * Function to increment individual item.
+   * @param {item} item - The item object to be incremented.
+   */
+  handleIncrement = (item) => {
+    const newItems = [...this.state.items];
+    const index = newItems.indexOf(item);
+    newItems[index] = { ...item };
+    newItems[index].quantity++;
+    let data = { quantity: newItems[index].quantity };
+    //console.log(item.id);
+    DataService.update(item.id, data)
       .then((response) => {
-        this.setState({ counters: newCounters });
-
+        this.setState({ items: newItems });
         console.log(response.data);
       })
       .catch((e) => {
@@ -111,14 +118,15 @@ export default class App extends Component {
     this.refreshList();
   };
 
+  /** Adds a new item to the state and DB */
   handleAdd = () => {
-    const indexNew = this.state.counters.length + 1;
-    const newCounter = { id: indexNew, quantity: 0, item: "" };
-    let newCounters = [...this.state.counters];
-    newCounters.push(newCounter);
-    this.setState({ counters: newCounters });
+    const indexNew = this.state.items.length + 1;
+    const newItem = { id: indexNew, quantity: 0, item: "" };
+    let newItems = [...this.state.items];
+    newItems.push(newItem);
+    this.setState({ items: newItems });
 
-    DataService.create(newCounter)
+    DataService.create(newItem)
       .then((response) => {
         console.log(response.data);
       })
@@ -127,19 +135,23 @@ export default class App extends Component {
       });
   };
 
-  handleTextChange = (text, counter) => {
-    const newCounters = [...this.state.counters];
-    const index = newCounters.indexOf(counter);
-    newCounters[index] = { ...counter };
-    newCounters[index].item = text;
-    this.setState({ counters: newCounters });
-
-    //console.log(this.state.counters[index].item);
+  /**
+   * Takes the Item text dynamically typed by user.
+   * @param {string} text
+   * @param {item} item
+   */
+  handleTextChange = (text, item) => {
+    const newItems = [...this.state.items];
+    const index = newItems.indexOf(item);
+    newItems[index] = { ...item };
+    newItems[index].item = text;
+    this.setState({ items: newItems });
+    //console.log(this.state.items[index].item);
     //TODO: optimize API calls
     let data = { item: text };
-    DataService.update(counter.id, data)
+    DataService.update(item.id, data)
       .then((response) => {
-        this.setState({ counters: newCounters });
+        this.setState({ items: newItems });
         // console.log(response.data);
       })
       .catch((e) => {
@@ -147,16 +159,19 @@ export default class App extends Component {
       });
     this.refreshList();
   };
-
-  handleChecked = (counter) => {
-    const newCounters = [...this.state.counters];
-    const index = newCounters.indexOf(counter);
-    newCounters[index] = { ...counter };
-    newCounters[index].check = true;
+  /**
+   * Update checked value of item
+   * @param {item} item
+   */
+  handleChecked = (item) => {
+    const newItems = [...this.state.items];
+    const index = newItems.indexOf(item);
+    newItems[index] = { ...item };
+    newItems[index].check = true;
     let data = { check: true };
-    DataService.update(counter.id, data)
+    DataService.update(item.id, data)
       .then((response) => {
-        this.setState({ counters: newCounters });
+        this.setState({ items: newItems });
         // console.log(response.data);
       })
       .catch((e) => {
@@ -174,8 +189,8 @@ export default class App extends Component {
           <GlobalStyles />
           <div className="">
             <NavBar
-              totalCounters={
-                this.state.counters.filter((c) => c.quantity > 0 && !c.check)
+              totalItems={
+                this.state.items.filter((c) => c.quantity > 0 && !c.check)
                   .length
               }
             ></NavBar>
@@ -187,19 +202,21 @@ export default class App extends Component {
                     onlabel="Dark"
                     offlabel="Light"
                     onstyle="dark"
+                    offstyle="light"
+                    style="border"
                     onChange={this.toggleTheme}
                     width={100}
                   />
                 </ToggleStyle>
-                <Counters
+                <Items
                   onReset={this.handleReset}
                   onIncrement={this.handleIncrement}
                   onDelete={this.handleDelete}
                   onAdd={this.handleAdd}
                   onTextChange={this.handleTextChange}
                   onCheck={this.handleChecked}
-                  counters={this.state.counters}
-                ></Counters>
+                  items={this.state.items}
+                ></Items>
               </div>
             </Router>
           </div>

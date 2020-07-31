@@ -3,47 +3,44 @@ import "../styles/counter.css";
 import check from "../resources/icons/tick.png";
 import DataService from "../services/services";
 
-class Counter extends Component {
+class Item extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
+    this.getBadgeClases = this.getBadgeClases.bind(this);
     //Individual Component tag style without classes
     this.style = {
       fontSize: 20,
     };
-
-    //this.incrementCount = this.incrementCount.bind(this);
   }
-
-  //Methods
-  //Example of arrow function(no binding needed)
-  // incrementCount = () => {
-  //   console.log("Button clicked");
-  //   this.setState({ count: this.state.count + 1 });
-  // };
-
-  handleCheck(counter) {
+  /**
+   * Handle check done
+   * @param {item} item
+   */
+  handleCheck(item) {
     var displayDefault = "initial";
     return displayDefault;
   }
-
-  getBadgeClases() {
+  /**
+   *
+   */
+  getBadgeClases(quantity) {
     let classes = "badge m1 badge-";
-    classes += this.props.counter === 0 ? "warning" : "primary";
+    classes += quantity === 0 ? "warning" : "primary";
     return classes;
   }
 
   handleChange(event) {
-    this.props.onTextChange(event.target.value, this.props.counter);
+    this.props.onTextChange(event.target.value, this.props.item);
   }
   //Final Render
   render() {
     return (
       <div className="">
         <img
-          style={{ display: this.handleCheck(this.props.counter) }}
+          style={{ display: this.handleCheck(this.props.item) }}
           src={check}
           className="check"
           alt="Logo"
@@ -51,8 +48,11 @@ class Counter extends Component {
         <div className="card row ">
           <div className="card-body">
             <div className="col-xs-1 in-block">
-              <span style={this.style} className={this.getBadgeClases()}>
-                {this.props.counter.quantity}
+              <span
+                style={this.style}
+                className={this.getBadgeClases(this.props.item.quantity)}
+              >
+                {this.props.item.quantity}
               </span>{" "}
             </div>
 
@@ -62,14 +62,14 @@ class Counter extends Component {
                 <input
                   className="input"
                   type="text"
-                  defaultValue={this.props.counter.item}
+                  defaultValue={this.props.item.item}
                   onChange={this.handleChange}
                 />
               </form>
             </div>
             <div className="col-xs-3 in-block ml-4">
               <button
-                onClick={() => this.props.onIncrement(this.props.counter)}
+                onClick={() => this.props.onIncrement(this.props.item)}
                 className="btn btn-secondary btn-sm "
               >
                 +
@@ -77,7 +77,7 @@ class Counter extends Component {
             </div>
             <div className="col-xs-2 ml-3 in-block ">
               <button
-                onClick={() => this.props.onDelete(this.props.counter.id)}
+                onClick={() => this.props.onDelete(this.props.item.id)}
                 className="btn btn-danger btn-sm "
               >
                 {" "}
@@ -91,4 +91,4 @@ class Counter extends Component {
   }
 }
 
-export default Counter;
+export default Item;

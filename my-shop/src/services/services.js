@@ -1,25 +1,25 @@
 import http from "../http-common";
 
 const getAll = () => {
-  return http.get("/tutorials");
+  return http.get("/items/");
 };
 
 const create = (data) => {
-  return http.post("/tutorials", data);
+  return http.post("/items", data);
 };
 const update = (id, data) => {
-  return http.put(`/tutorials/${id}`, data);
+  return http.put(`/items/${id}`, data);
 };
 const updateAll = (data) => {
-  return http.put("/tutorials", data);
+  return http.put("/items", data);
 };
 
 const remove = (id) => {
-  return http.delete(`/tutorials/${id}`);
+  return http.delete(`/items/${id}`);
 };
 
 const removeAll = () => {
-  return http.delete("/tutorials");
+  return http.delete("/items");
 };
 
 export default {

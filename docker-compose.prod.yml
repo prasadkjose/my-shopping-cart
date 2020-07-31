@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  server-prod:
+    container_name: server-prod
+    image: server:prod
+    build:
+      context: .
+      dockerfile: ./my-shop-server/Dockerfile.prod
+    ports:
+      - "8080:8080"
+
+  react-prod:
+    container_name: my-shop-prod
+    build:
+      context: .
+      dockerfile: ./my-shop/Dockerfile.prod
+    image: my-shop:prod
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server-prod
