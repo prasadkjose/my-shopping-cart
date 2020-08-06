@@ -8,14 +8,13 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
+COPY package*.json ./
+RUN npm i --silent
 
 # add app
 COPY . ./
 #Expose port and start application
-EXPOSE 8080
+#EXPOSE 8081
 # start app
 CMD ["npm", "start"]
 

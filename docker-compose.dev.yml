@@ -1,16 +1,17 @@
 version: "3.3"
 services:
   server:
+    container_name: server
     build: ./my-shop-server
     image: server:dev
     ports:
-      - "8080:8080"
+      - "8081:8081"
   react:
     container_name: react
     build: ./my-shop
     image: react:dev
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - ".:/app"
       - "/app/node_modules"

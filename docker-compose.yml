@@ -1,22 +1,29 @@
-version: "3.7"
-
+version: "3.3"
 services:
-  server-prod:
-    container_name: server-prod
-    image: server:prod
-    build:
-      context: .
-      dockerfile: ./my-shop-server/Dockerfile.prod
+  server:
+    container_name: server
+    build: ./my-shop-server
+    image: server:dev
     ports:
-      - "8080:8080"
-
-  react-prod:
-    container_name: my-shop-prod
-    build:
-      context: .
-      dockerfile: ./my-shop/Dockerfile.prod
-    image: my-shop:prod
+      - "8081:8081"
+  react:
+    container_name: react
+    build: ./my-shop
+    image: react:dev
     ports:
-      - "80:80"
+      - "3001:3000"
     depends_on:
-      - server-prod
+      - server
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+#  Mongo dependecy not added yet. DB calls made to Atlas
+#     depends_on:
+#       - mongo
+#   mongo:
+#     image: mongo
+#     ports:
+#       - '27017:27017'
+
